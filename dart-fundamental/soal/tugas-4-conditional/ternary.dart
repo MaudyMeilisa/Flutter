@@ -1,5 +1,4 @@
-import 'dart:io';
-void main() { 
+import 'dart:io';void main() { 
     print('Apakah anda ingin menginstall: y/t ');
     String? inputText = stdin.readLineSync();
 
