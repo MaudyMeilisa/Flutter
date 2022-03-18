@@ -1,3 +1,51 @@
+import 'dart:html';
+
+class Sample {
+  String name;
+  String gender;
+  int age;
+  List<String>? hobi;
+  Github? github;
+  List<Article> articles;
+  Map<String, Contact>? contact;
+  Sample({
+    required this.name,
+    required this.age,
+    required this.gender,
+    required this.hobi,
+    required this.github,
+    required this.articles,
+    required this.contact,
+  });
+  @override
+  String toString() {
+    return 'Sample{name: $name, age: $age, gender: $gender, hobi: $hobi, github: $github, articles: $articles, contact: $contact}';
+  }
+
+  factory Sample.fromJson(Map<String, dynamic> json) {
+    var listArticles = json["articles"] as List;
+    var iterableAticles = listArticles.map((article) {
+      return Article.fromJson(article);
+    });
+    var articles = List<Article>.from(iterableAticles);
+
+    var mapContact = json["contact"] as Map;
+
+    var mapContactContent = mapContact.map((key, value) {
+      return MapEntry<String, Contact>(key, Contact.fromJson(value));
+    });
+    return Sample(
+      name: json["name"],
+      age: json["age"],
+      gender: json["gender"],
+      hobi: List<String>.from(json["hobi"]),
+      github: Github.fromJson(json["github"]),
+      articles: articles,
+      contact: mapContactContent,
+    );
+  }
+}
+
 class Github {
   String username;
   int repository;
@@ -57,52 +105,6 @@ class Contact {
     return Contact(
       name: json["name"],
       phone: json["phone"],
-    );
-  }
-}
-
-class Sample {
-  String name;
-  String gender;
-  int age;
-  List<String>? hobi;
-  Github? github;
-  List<Article> articles;
-  Map<String, Contact>? contact;
-  Sample({
-    required this.name,
-    required this.age,
-    required this.gender,
-    required this.hobi,
-    required this.github,
-    required this.articles,
-    required this.contact,
-  });
-  @override
-  String toString() {
-    return 'Sample{name: $name, age: $age, gender: $gender, hobi: $hobi, github: $github, articles: $articles, contact: $contact}';
-  }
-
-  factory Sample.fromJson(Map<String, dynamic> json) {
-    var listArticles = json["articles"] as List;
-    var iterableAticles = listArticles.map((article) {
-      return Article.fromJson(article);
-    });
-    var articles = List<Article>.from(iterableAticles);
-
-    var mapContact = json["contact"] as Map;
-
-    var mapContactContent = mapContact.map((key, value) {
-      return MapEntry<String, Contact>(key, Contact.fromJson(value));
-    });
-    return Sample(
-      name: json["name"],
-      age: json["age"],
-      gender: json["gender"],
-      hobi: List<String>.from(json["hobi"]),
-      github: Github.fromJson(json["github"]),
-      articles: articles,
-      contact: mapContactContent,
     );
   }
 }
